@@ -1,19 +1,19 @@
 import pytest
 import main 
 
-def test_total_costFamily():
+def test_total_cost_family():
     membresia = "Family"
     features = []
     response = calculateTotal(membresia, features)
     assert response == 2
 
-def test_total_costBasic():
+def test_total_cost_basic():
     membresia = "Basic"
     features = []
     response = calculateTotal(membresia, features)
     assert response == 2
 
-def test_total_costPremium():
+def test_total_cost_premium():
     membresia = "Premium"
     features = []
     response = calculateTotal(membresia, features)
