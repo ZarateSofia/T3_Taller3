@@ -28,3 +28,7 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
+    - name: Test with pytest
+      run: |
+        pip install pytest
+        pytest test/test.py --doctest-modules --junitxml=junit/test-results.xml 
