@@ -18,6 +18,17 @@ def test_calculate_total_cost_premium():
     response = main.calculate_total_cost(membresia, features)
     assert response == 200
 
+def test_calculate_group_discount():
+    users = 2
+    membership_cost = 100
+    response = main.calculate_group_discount(users, membership_cost)
+    assert response == 10
 
+def test_apply_discounts():
+    total_cost = 500
+    response = main.apply_discounts(total_cost)
+    assert response == 450
 
-
+def test_failed_confirm_membership():
+    response = main.confirm_membership(None, [])
+    assert response == "No membership plan selected."
