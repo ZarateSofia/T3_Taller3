@@ -1,4 +1,5 @@
 import main 
+#import pytest
 
 def test_calculate_total_cost_family():
     membresia = "Family"
@@ -32,3 +33,10 @@ def test_apply_discounts():
 def test_failed_confirm_membership():
     response = main.confirm_membership("Some Membership", [])
     assert response == -1
+
+''''''
+def test_confirm_membership():
+    plan = "Basic"
+    features = ["Pool Access", "Personal Trainer"]
+    response = main.confirm_membership(plan, features)
+    assert response == 230
