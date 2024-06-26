@@ -30,5 +30,5 @@ def test_apply_discounts():
     assert response == 450
 
 def test_failed_confirm_membership():
-    response = main.confirm_membership(None, [])
-    assert response == "No membership plan selected."
+    response = main.confirm_membership("Some Membership", [])
+    assert response == -1
