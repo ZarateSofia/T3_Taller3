@@ -1,4 +1,4 @@
-from .. import main
+import main
 
 def test_calculate_total_cost_family():
     membresia = "Family"
