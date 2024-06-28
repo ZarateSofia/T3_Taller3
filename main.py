@@ -1,129 +1,185 @@
-plans = {"Basic":100,"Premium":200,"Family":300}
-extraFeatures = {"Personal training sessions":25,"Group classes":30}
+import sys
 
-def show_plans():
-    for index,plan in enumerate(plans.keys()):
-        print(str(index)+")",plan)
+extra_features = {}
+plans = {}
 
-def calculate_total_cost(plan,extra_features):
-    plan_cost = plans[plan]
+plans["Basic"] = {"cost": 100, "available": True}
+plans["Premium"] = {"cost": 200, "available": True}
+plans["Family"] = {"cost": 300, "available": False}
+
+extra_features["Personal training sessions"] = {"cost": 25, "premium": False, "available": True}
+extra_features["Group classes"] = {"cost": 30, "premium": False, "available": True}
+extra_features["Specialized training programs"] = {"cost": 70, "premium": True, "available": True}
+extra_features["Pool Access"] = {"cost": 60, "premium": True, "available": False}
+
+def show_elements(elements_list, reference_dictionary):
+    for index, element in enumerate(elements_list):
+        option_number = index + 1
+        element_cost = reference_dictionary[element]["cost"]
+        print(f"{option_number}. {element} ${element_cost}")
+
+def calculate_base_cost(plan):
+    return plans[plan]["cost"]
+
+def calculate_features_cost(features):
     extra_cost = 0
-    for extra in extra_features:
-        extra_cost += extraFeatures[extra]
-    return plan_cost + extra_cost
+    for feature in features:
+        extra_cost += extra_features[feature]["cost"]
+    return extra_cost
 
-def calculate_group_discount(users,membership_cost):
+def calculate_group_discount(group_size, membership_cost):
     discount = 0
-    if users >=2:
+    if group_size >= 2:
         discount = 0.10 * membership_cost
     return discount
 
 def calculate_special_discount(total_cost):
     discount = 0
-    if total_cost>400:
-        discount = 50
-    elif total_cost>2:
-        discount = 20
-    return discount
-
-def add_membership_plan(plans, name, cost, available=True):
-    plans[name] = {"cost": cost, "available": available}
-
-def add_additional_feature(features, name, cost, available=True):
-    features[name] = {"cost": cost, "available": available}
-
-def display_membership_plans(plans):
-    print("Available Membership Plans:")
-    for name, details in plans.items():
-        status = "Available" if details["available"] else "Unavailable"
-        print(f"{name} - ${details['cost']} ({status})")
-
-def display_additional_features(features):
-    print("Available Additional Features:")
-    for name, details in features.items():
-        status = "Available" if details["available"] else "Unavailable"
-        print(f"{name} - ${details['cost']} ({status})")
-
-def select_membership_plan(plans, plan_name):
-    if plan_name in plans and plans[plan_name]["available"]:
-        return {"name": plan_name, **plans[plan_name]}
-    print(f"Membership plan '{plan_name}' is not available.")
-    return None
-
-def select_additional_features(features, feature_names):
-    selected_features = []
-    for feature_name in feature_names:
-        if feature_name in features and features[feature_name]["available"]:
-            selected_features.append({"name": feature_name, **features[feature_name]})
-        else:
-            print(f"Feature '{feature_name}' is not available.")
-            return []
-    return selected_features
-
-def calculate_total_cost(selected_plan, selected_features):
-    total_cost = selected_plan["cost"] if selected_plan else 0
-    for feature in selected_features:
-        total_cost += feature["cost"]
-    return total_cost
-
-def apply_discounts(total_cost):
-    discount = 0
     if total_cost > 400:
         discount = 50
     elif total_cost > 200:
         discount = 20
-    return total_cost - discount
+    return discount
 
-def apply_premium_surcharge(total_cost):
-    return total_cost * 1.15
+def calculate_premium_surcharge(total_cost):
+    return total_cost * 0.15
 
-def confirm_membership(selected_plan, selected_features):
-    if not selected_plan:
-        print("No membership plan selected.")
-        return
+def check_availability(plan, features):
+    is_available_plan = plans[plan]["available"]
+    are_available_features = True
+    for feature in features:
+        is_available_feature = extra_features[feature]["available"]
+        are_available_features = are_available_features and is_available_feature
+    return is_available_plan and are_available_features
 
-    total_cost = calculate_total_cost(selected_plan, selected_features)
-    total_cost = apply_discounts(total_cost)
-    if any(feature["name"] == "Premium" for feature in selected_features):
-        total_cost = apply_premium_surcharge(total_cost)
+def validate_features(user_input, features):
+    options = user_input.strip().split(",")
+    option_numbers = []
+    for option in options:
+        valid_option = validate_option(option, features)
+        option_numbers.append(valid_option)
+    return option_numbers
 
-    print("Membership Confirmation:")
-    print(f"Selected Plan: {selected_plan['name']}")
-    print("Selected Features:", [feature["name"] for feature in selected_features])
-    print(f"Total Cost: ${total_cost:.2f}")
+def get_features(premium):
+    features = []
+    for key, value in extra_features.items():
+        if value["premium"] is premium:
+            features.append(key)
+    return features
 
-    confirmation = input("Confirm membership plan? (yes/no): ").strip().lower()
-    if confirmation == 'yes':
-        print("Membership plan confirmed.")
-    else:
-        print("Membership plan cancelled. Please make your selections again.")
-        return None, []
+def validate_option(user_input, options):
+    number = 0
+    try:
+        number = int(user_input)
+        if number > len(options) or number < 1:
+            print("ERROR: A non valid option was provided")
+            sys.exit(-1)
+        return number - 1
+    except ValueError:
+        print("ERROR: A non numeric option was provided")
+        sys.exit(-1)
 
-# Example usage
-membership_plans = {}
-additional_features = {}
+def validate_group_input(group_size_input):
+    try:
+        size = int(group_size_input)
+        if size < 1:
+            print("ERROR: At least one person must subscribe")
+            sys.exit(-1)
+        return size
+    except ValueError:
+        print("ERROR: A non numeric option was provided")
+        sys.exit(-1)
 
-# Add membership plans
-add_membership_plan(membership_plans, "Basic", 100)
-add_membership_plan(membership_plans, "Standard", 200)
-add_membership_plan(membership_plans, "Premium", 300)
+def apply_discounts(total_cost, *discounts):
+    for discount in discounts:
+        if total_cost - discount >= 0:
+            total_cost -= discount
+        else:
+            print("ERROR: Invalid total cost calculated")
+            sys.exit(-1)
+    return total_cost
 
-# Add additional features
-add_additional_feature(additional_features, "Pool Access", 50)
-add_additional_feature(additional_features, "Personal Trainer", 100)
-add_additional_feature(additional_features, "Premium", 200)
+def apply_surcharge(surcharge, total_cost):
+    return total_cost + surcharge
 
-# Display available membership plans and additional features
-display_membership_plans(membership_plans)
-display_additional_features(additional_features)
+def get_selected_plan(plans_list):
+    show_elements(plans_list, plans)
+    plan_input = input("Enter the number of the plan that you want: ")
+    selected_plan_index = validate_option(plan_input, plans_list)
+    return plans_list[selected_plan_index]
 
-# Select membership plan and additional features based on user input
-selected_plan_name = input("Enter the name of the membership plan you want to select: ").strip()
-selected_plan = select_membership_plan(membership_plans, selected_plan_name)
+def get_selected_basic_features():
+    basic_features = get_features(False)
+    show_elements(basic_features, extra_features)
+    basic_features_input = input("Enter the number of the basic features that you want separated by comma: ")
+    selected_basic_features_indexes = validate_features(basic_features_input, basic_features)
+    return [basic_features[i] for i in selected_basic_features_indexes]
 
-if selected_plan:
-    selected_feature_names = input("Enter the names of the additional features you want to select (comma separated): ").strip().split(',')
-    selected_feature_names = [name.strip() for name in selected_feature_names]
-    selected_features = select_additional_features(additional_features, selected_feature_names)
-    if selected_features:
-        confirm_membership(selected_plan, selected_features)
+def get_selected_premium_features():
+    premium_features_list = get_features(True)
+    show_elements(premium_features_list, extra_features)
+    premium_features_input = input("Enter the number of the premium features that you want separated by comma: ")
+    selected_premium_features_indexes = validate_features(premium_features_input, premium_features_list)
+    return [premium_features_list[i] for i in selected_premium_features_indexes]
+
+def confirm_membership(selected_plan, selected_basic_features, selected_premium_features, group_size, total_cost):
+    print("\n--- Membership Summary ---")
+    print(f"Selected Plan: {selected_plan}")
+    print(f"Selected Basic Features: {', '.join(selected_basic_features)}")
+    if selected_premium_features:
+        print(f"Selected Premium Features: {', '.join(selected_premium_features)}")
+    print(f"Group Size: {group_size}")
+    print(f"Total Cost: ${total_cost}")
+
+    confirm = input("Do you confirm the membership? (yes/no): ").strip().lower()
+    if confirm != 'yes':
+        print("Membership canceled.")
+        return -1
+
+    print("Membership confirmed. Thank you!")
+    return total_cost
+
+def main():
+    print("Welcome to the Gym Membership Management System")
+    plans_list = list(plans.keys())
+
+    selected_plan = get_selected_plan(plans_list)
+    selected_basic_features = get_selected_basic_features()
+
+    if not check_availability(selected_plan, selected_basic_features):
+        print("ERROR: Selected plan or features are not available")
+        sys.exit(-1)
+
+    selected_premium_features = []
+    premium_surcharge = 0
+    base_cost = calculate_base_cost(selected_plan)
+    extra_features_cost = calculate_features_cost(selected_basic_features)
+    total_cost = base_cost + extra_features_cost
+
+    if selected_plan == "Premium":
+        selected_premium_features = get_selected_premium_features()
+
+        if not check_availability(selected_plan, selected_premium_features):
+            print("ERROR: Selected plan or features are not available")
+            sys.exit(-1)
+
+        total_cost += calculate_features_cost(selected_premium_features)
+        premium_surcharge = calculate_premium_surcharge(total_cost)
+
+    group_size_input = input("Enter the number of persons that will buy the membership: ")
+    group_size = validate_group_input(group_size_input)
+
+    special_discount = calculate_special_discount(total_cost)
+    group_discount = calculate_group_discount(group_size, total_cost)
+
+    total_cost = apply_discounts(total_cost, special_discount, group_discount)
+    total_cost = apply_surcharge(premium_surcharge, total_cost)
+
+    final_cost = confirm_membership(selected_plan, selected_basic_features, selected_premium_features, group_size, total_cost)
+    if final_cost == -1:
+        return -1
+
+    return final_cost
+
+if __name__ == "__main__":
+    main()

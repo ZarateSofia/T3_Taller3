@@ -41,3 +41,4 @@ def test_calculate_premium_surcharge():
     expected_surcharge = total_cost * 0.15
     result = main.calculate_premium_surcharge(total_cost)
     assert result == pytest.approx(expected_surcharge), f"Falló con total_cost={total_cost}: resultado {result}, esperado {expected_surcharge}"
+
