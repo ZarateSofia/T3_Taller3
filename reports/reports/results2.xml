@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="17" time="0.314" timestamp="2024-06-27T21:35:06.152879" hostname="DESKTOP-96QCRUC"><testcase classname="test_taller" name="test_calculate_special_discount[100-0]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[250-20]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[450-50]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[200-0]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[400-20]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[600-50]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[2-100-10]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[3-150-15]" time="0.003" /><testcase classname="test_taller" name="test_calculate_group_discount[1-200-0]" time="0.004" /><testcase classname="test_taller" name="test_calculate_group_discount[5-300-30]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[2-50-5]" time="0.001" /><testcase classname="test_taller" name="test_calculate_total_cost[Basic-features0-125]" time="0.001" /><testcase classname="test_taller" name="test_calculate_total_cost[Premium-features1-300]" time="0.001" /><testcase classname="test_taller" name="test_calculate_total_cost[Family-features2-130]" time="0.002"><failure message="AssertionError: Falló con entrada (plan=Family, features=['Personal training sessions', 'Group classes']): resultado 355, esperado 130&#10;assert 355 == 130">plan = 'Family', features = ['Personal training sessions', 'Group classes']
+expected_cost = 130
+
+    @pytest.mark.parametrize("plan, features, expected_cost", [
+        ("Basic", ["Personal training sessions"], 125),
+        ("Premium", ["Group classes", "Specialized training programs"], 300),
+        ("Family", ["Personal training sessions", "Group classes"], 130),
+        ("Basic", [], 100),
+        ("Premium", ["Personal training sessions"], 125)
+    ])
+    def test_calculate_total_cost(plan, features, expected_cost):
+        result = main.calculate_total_cost(plan, features)
+&gt;       assert result == expected_cost, f"Falló con entrada (plan={plan}, features={features}): resultado {result}, esperado {expected_cost}"
+E       AssertionError: Falló con entrada (plan=Family, features=['Personal training sessions', 'Group classes']): resultado 355, esperado 130
+E       assert 355 == 130
+
+test_taller.py:37: AssertionError</failure></testcase><testcase classname="test_taller" name="test_calculate_total_cost[Basic-features3-100]" time="0.001" /><testcase classname="test_taller" name="test_calculate_total_cost[Premium-features4-125]" time="0.001"><failure message="AssertionError: Falló con entrada (plan=Premium, features=['Personal training sessions']): resultado 225, esperado 125&#10;assert 225 == 125">plan = 'Premium', features = ['Personal training sessions'], expected_cost = 125
+
+    @pytest.mark.parametrize("plan, features, expected_cost", [
+        ("Basic", ["Personal training sessions"], 125),
+        ("Premium", ["Group classes", "Specialized training programs"], 300),
+        ("Family", ["Personal training sessions", "Group classes"], 130),
+        ("Basic", [], 100),
+        ("Premium", ["Personal training sessions"], 125)
+    ])
+    def test_calculate_total_cost(plan, features, expected_cost):
+        result = main.calculate_total_cost(plan, features)
+&gt;       assert result == expected_cost, f"Falló con entrada (plan={plan}, features={features}): resultado {result}, esperado {expected_cost}"
+E       AssertionError: Falló con entrada (plan=Premium, features=['Personal training sessions']): resultado 225, esperado 125
+E       assert 225 == 125
+
+test_taller.py:37: AssertionError</failure></testcase><testcase classname="test_taller" name="test_calculate_premium_surcharge" time="0.001" /></testsuite></testsuites>

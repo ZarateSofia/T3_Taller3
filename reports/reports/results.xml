@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="17" time="0.244" timestamp="2024-06-27T21:21:07.738339" hostname="DESKTOP-96QCRUC"><testcase classname="test_taller" name="test_calculate_special_discount[100-0]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[250-20]" time="0.000" /><testcase classname="test_taller" name="test_calculate_special_discount[450-50]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[200-0]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[400-20]" time="0.001" /><testcase classname="test_taller" name="test_calculate_special_discount[600-50]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[2-100-10]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[3-150-15]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[1-200-0]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[5-300-30]" time="0.001" /><testcase classname="test_taller" name="test_calculate_group_discount[2-50-5]" time="0.001" /><testcase classname="test_taller" name="test_calculate_total_cost[Basic-features0-125]" time="0.001"><failure message="AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?">plan = 'Basic', features = ['Personal training sessions'], expected_cost = 125
+
+    @pytest.mark.parametrize("plan, features, expected_cost", [
+        ("Basic", ["Personal training sessions"], 125),
+        ("Premium", ["Group classes", "Specialized training programs"], 300),
+        ("Family", ["Personal training sessions", "Group classes"], 130),
+        ("Basic", [], 100),
+        ("Premium", ["Personal training sessions"], 125)
+    ])
+    def test_calculate_total_cost(plan, features, expected_cost):
+&gt;       result = main.calculate_total_cost(plan, features)
+E       AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?
+
+test_taller.py:36: AttributeError</failure></testcase><testcase classname="test_taller" name="test_calculate_total_cost[Premium-features1-300]" time="0.001"><failure message="AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?">plan = 'Premium', features = ['Group classes', 'Specialized training programs']
+expected_cost = 300
+
+    @pytest.mark.parametrize("plan, features, expected_cost", [
+        ("Basic", ["Personal training sessions"], 125),
+        ("Premium", ["Group classes", "Specialized training programs"], 300),
+        ("Family", ["Personal training sessions", "Group classes"], 130),
+        ("Basic", [], 100),
+        ("Premium", ["Personal training sessions"], 125)
+    ])
+    def test_calculate_total_cost(plan, features, expected_cost):
+&gt;       result = main.calculate_total_cost(plan, features)
+E       AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?
+
+test_taller.py:36: AttributeError</failure></testcase><testcase classname="test_taller" name="test_calculate_total_cost[Family-features2-130]" time="0.001"><failure message="AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?">plan = 'Family', features = ['Personal training sessions', 'Group classes']
+expected_cost = 130
+
+    @pytest.mark.parametrize("plan, features, expected_cost", [
+        ("Basic", ["Personal training sessions"], 125),
+        ("Premium", ["Group classes", "Specialized training programs"], 300),
+        ("Family", ["Personal training sessions", "Group classes"], 130),
+        ("Basic", [], 100),
+        ("Premium", ["Personal training sessions"], 125)
+    ])
+    def test_calculate_total_cost(plan, features, expected_cost):
+&gt;       result = main.calculate_total_cost(plan, features)
+E       AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?
+
+test_taller.py:36: AttributeError</failure></testcase><testcase classname="test_taller" name="test_calculate_total_cost[Basic-features3-100]" time="0.001"><failure message="AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?">plan = 'Basic', features = [], expected_cost = 100
+
+    @pytest.mark.parametrize("plan, features, expected_cost", [
+        ("Basic", ["Personal training sessions"], 125),
+        ("Premium", ["Group classes", "Specialized training programs"], 300),
+        ("Family", ["Personal training sessions", "Group classes"], 130),
+        ("Basic", [], 100),
+        ("Premium", ["Personal training sessions"], 125)
+    ])
+    def test_calculate_total_cost(plan, features, expected_cost):
+&gt;       result = main.calculate_total_cost(plan, features)
+E       AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?
+
+test_taller.py:36: AttributeError</failure></testcase><testcase classname="test_taller" name="test_calculate_total_cost[Premium-features4-125]" time="0.001"><failure message="AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?">plan = 'Premium', features = ['Personal training sessions'], expected_cost = 125
+
+    @pytest.mark.parametrize("plan, features, expected_cost", [
+        ("Basic", ["Personal training sessions"], 125),
+        ("Premium", ["Group classes", "Specialized training programs"], 300),
+        ("Family", ["Personal training sessions", "Group classes"], 130),
+        ("Basic", [], 100),
+        ("Premium", ["Personal training sessions"], 125)
+    ])
+    def test_calculate_total_cost(plan, features, expected_cost):
+&gt;       result = main.calculate_total_cost(plan, features)
+E       AttributeError: module 'main' has no attribute 'calculate_total_cost'. Did you mean: 'calculate_base_cost'?
+
+test_taller.py:36: AttributeError</failure></testcase><testcase classname="test_taller" name="test_calculate_premium_surcharge" time="0.001" /></testsuite></testsuites>
