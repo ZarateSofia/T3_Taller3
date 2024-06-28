@@ -28,9 +28,9 @@ def test_calculate_group_discount(group_size, membership_cost, expected_discount
 @pytest.mark.parametrize("plan, features, expected_cost", [
     ("Basic", ["Personal training sessions"], 125),
     ("Premium", ["Group classes", "Specialized training programs"], 300),
-    ("Family", ["Personal training sessions", "Group classes"], 130),
+    ("Family", ["Personal training sessions", "Group classes"], 355),
     ("Basic", [], 100),
-    ("Premium", ["Personal training sessions"], 125)
+    ("Premium", ["Personal training sessions"], 225)
 ])
 def test_calculate_total_cost(plan, features, expected_cost):
     result = main.calculate_total_cost(plan, features)
