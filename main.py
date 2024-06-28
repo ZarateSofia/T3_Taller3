@@ -27,6 +27,9 @@ def calculate_features_cost(features):
         extra_cost += extra_features[feature]["cost"]
     return extra_cost
 
+def calculate_total_cost(plan, features):
+    return calculate_base_cost(plan) + calculate_features_cost(features)
+
 def calculate_group_discount(group_size, membership_cost):
     discount = 0
     if group_size >= 2:
